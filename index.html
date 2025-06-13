@@ -4,6 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>التقويم الهجري والميلادي</title>
+
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+
+  <!-- Search Engine SEO -->
+<meta name="description" content="تحويل التاريخ الهجري والميلادي وعرض التقويم الإسلامي السنوي، مع تحديد الأعياد والمناسبات الإسلامية الهامة." />
+<meta name="keywords" content="التقويم الهجري, تحويل التاريخ, رمضان, عيد الفطر, التقويم الإسلامي, Islamic Calendar, Hijri Date Converter" />
+<meta name="author" content="islamiccalendar.dev" />
+
+<!-- Open Graph for social sharing -->
+<meta property="og:title" content="التقويم الهجري والميلادي" />
+<meta property="og:description" content="تحويل بين التاريخ الهجري والميلادي وعرض المناسبات الإسلامية. التقويم الإسلامي 1446." />
+<meta property="og:url" content="https://www.islamiccalendar.dev/" />
+<meta property="og:type" content="website" />
+
+<!-- Language/Locale -->
+<meta property="og:locale" content="ar_AR" />
+<link rel="alternate" hreflang="ar" href="https://www.islamiccalendar.dev/" />
+<link rel="alternate" hreflang="en" href="https://www.islamiccalendar.dev/#en" />
+
   <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/moment-hijri@2.1.2/moment-hijri.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -77,7 +97,7 @@
 
     const t = i18n[lang];
 
-    document.getElementById('page-title').textContent = t.title;
+    document.getElementById('page-title').innerHTML = `<img src="favicon.ico" class="inline w-6 h-6 mr-2 align-middle" alt="icon"> ${t.title}`;
     document.getElementById('label-year').textContent = t.year;
     document.getElementById('label-month').textContent = t.month;
 
