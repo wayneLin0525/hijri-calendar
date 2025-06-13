@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>التقويم الهجري والميلادي</title>
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment-hijri@2.1.2/moment-hijri.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 p-6">
+  <div class="max-w-5xl mx-auto bg-white rounded-xl shadow-md p-6">
+    <h1 id="page-title" class="text-2xl font-bold mb-6 text-center"></h1>
+
+    <div class="flex flex-wrap gap-4 justify-center mb-6">
+      <div>
+        <label id="label-year" for="year-select" class="block text-sm font-medium text-gray-700"></label>
+        <select id="year-select" class="mt-1 p-2 border rounded"></select>
+      </div>
+      <div>
+        <label id="label-month" for="month-select" class="block text-sm font-medium text-gray-700"></label>
+        <select id="month-select" class="mt-1 p-2 border rounded"></select>
+      </div>
+    </div>
+
+    <table class="table-auto w-full text-left border-collapse">
+      <thead>
+        <tr class="bg-gray-200" id="table-header"></tr>
+      </thead>
+      <tbody id="date-table" class="bg-white"></tbody>
+    </table>
+  </div>
+
+  <script>
+    const hashLang = window.location.hash.replace('#', '') || 'ar';
+    const lang = ['ar', 'en', 'zh'].includes(hashLang) ? hashLang : 'ar';
+
+    const i18n = {
+      ar: {
+        title: 'التقويم الهجري والميلادي',
+        year: 'اختر السنة الهجرية',
+        month: 'اختر الشهر',
+        headers: ['اليوم', 'التاريخ الهجري', 'التاريخ الميلادي', 'المناسبة'],
+        weekdays: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت']
+      },
+      en: {
+        title: 'Hijri & Gregorian Calendar',
+        year: 'Select Hijri Year',
+        month: 'Select Month',
+        headers: ['Weekday', 'Hijri Date', 'Gregorian Date', 'Holiday'],
+        weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+      },
+      zh: {
+        title: '伊斯兰历与公历转换',
+        year: '选择伊斯兰年份',
+        month: '选择月份',
+        headers: ['星期', '伊斯兰历', '公历', '节日'],
+        weekdays: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+      }
+    };
+
+    const holidayMap = {
+      "1-1": { ar: "رأس السنة الهجرية", en: "Islamic New Year", zh: "伊斯兰新年" },
+      "1-10": { ar: "عاشوراء", en: "Ashura", zh: "阿舒拉节" },
+      "3-12": { ar: "المولد النبوي", en: "Mawlid al-Nabi", zh: "圣纪节" },
+      "7-27": { ar: "الإسراء والمعراج", en: "Isra and Mi'raj", zh: "登宵夜" },
+      "8-15": { ar: "منتصف شعبان", en: "Mid-Sha'ban", zh: "中夜节" },
+      "9-1": { ar: "بداية رمضان", en: "Start of Ramadan", zh: "斋月开始" },
+      "9-27": { ar: "ليلة القدر (تقديرية)", en: "Laylat al-Qadr (estimated)", zh: "宿命夜（预估）" },
+      "10-1": { ar: "عيد الفطر", en: "Eid al-Fitr", zh: "开斋节" },
+      "12-8": { ar: "بداية الحج", en: "Start of Hajj", zh: "朝觐开始" },
+      "12-9": { ar: "يوم عرفة", en: "Day of Arafah", zh: "阿拉法特日" },
+      "12-10": { ar: "عيد الأضحى", en: "Eid al-Adha", zh: "宰牲节" },
+      "12-11": { ar: "ثاني أيام العيد", en: "Second Day of Eid", zh: "宰牲节第二天" },
+      "12-12": { ar: "ثالث أيام العيد", en: "Third Day of Eid", zh: "宰牲节第三天" }
+    };
+
+    const t = i18n[lang];
+
+    document.getElementById('page-title').textContent = t.title;
+    document.getElementById('label-year').textContent = t.year;
+    document.getElementById('label-month').textContent = t.month;
+
+    t.headers.forEach(header => {
+      const th = document.createElement('th');
+      th.className = 'border p-2';
+      th.textContent = header;
+      document.getElementById('table-header').appendChild(th);
+    });
+
+    const hijriMonths = [
+      "Muharram", "Safar", "Rabiʿ al-awwal", "Rabiʿ al-thani",
+      "Jumada al-awwal", "Jumada al-thani", "Rajab", "Shaʿban",
+      "Ramadan", "Shawwal", "Dhu al-Qaʿdah", "Dhu al-Ḥijjah"
+    ];
+
+    function populateSelectors() {
+      const currentIYear = moment().iYear();
+      for (let y = currentIYear; y <= currentIYear + 1; y++) {
+        const option = document.createElement('option');
+        option.value = y;
+        option.textContent = y;
+        document.getElementById('year-select').appendChild(option);
+      }
+      hijriMonths.forEach((name, idx) => {
+        const option = document.createElement('option');
+        option.value = idx + 1;
+        option.textContent = name;
+        document.getElementById('month-select').appendChild(option);
+      });
+      document.getElementById('year-select').value = currentIYear;
+      document.getElementById('month-select').value = moment().iMonth() + 1;
+    }
+
+    function renderTable(iYear, iMonth) {
+      const table = document.getElementById('date-table');
+      table.innerHTML = '';
+      let iDay = 1;
+      while (iDay <= 30) {
+        const hijriDate = moment(`${iYear}-${iMonth}-${iDay}`, 'iYYYY-iM-iD');
+        if (!hijriDate.isValid()) break;
+        const weekdayIndex = hijriDate.day();
+        const weekDay = t.weekdays[weekdayIndex];
+        const hijriText = hijriDate.format('iYYYY/iM/iD');
+        const gregText = hijriDate.format('YYYY-MM-DD');
+        const key = `${iMonth}-${iDay}`;
+        const holiday = holidayMap[key]?.[lang] || "";
+
+        const row = document.createElement('tr');
+        row.className = holiday ? 'bg-yellow-100' : '';
+        row.innerHTML = `
+          <td class="border p-2">${weekDay}</td>
+          <td class="border p-2">${hijriText}</td>
+          <td class="border p-2">${gregText}</td>
+          <td class="border p-2 text-red-600 font-medium">${holiday}</td>
+        `;
+        table.appendChild(row);
+        iDay++;
+      }
+    }
+
+    document.getElementById('year-select').addEventListener('change', () => {
+      renderTable(Number(document.getElementById('year-select').value), Number(document.getElementById('month-select').value));
+    });
+    document.getElementById('month-select').addEventListener('change', () => {
+      renderTable(Number(document.getElementById('year-select').value), Number(document.getElementById('month-select').value));
+    });
+
+    populateSelectors();
+    renderTable(Number(document.getElementById('year-select').value), Number(document.getElementById('month-select').value));
+  </script>
+</body>
+</html>
