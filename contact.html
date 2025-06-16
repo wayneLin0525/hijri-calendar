@@ -1,22 +1,80 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
+、<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
+  <title>اتصل بنا | Contact Us | 联系我们</title>
+  <meta name="description" content="تواصل معنا من خلال النموذج أو البريد الإلكتروني. Contact us via the form or email." />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact - Islamic Calendar</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-50 p-6">
-  <div class="max-w-3xl mx-auto bg-white p-6 rounded-xl shadow">
-    <h1 class="text-2xl font-bold mb-4">Contact Us</h1>
-    <p class="mb-4 text-gray-700">
-      If you have feedback or suggestions, feel free to email us at:
-    </p>
-    <p class="mb-4 text-blue-600 font-medium">📧 islamiccalendar.dev@gmail.com</p>
-    <p class="mb-4 text-gray-700">
-      We appreciate contributions, suggestions, and corrections!
-    </p>
-    <a href="/" class="text-blue-600 underline">← Back to Calendar</a>
+<body class="bg-gray-100 p-6">
+  <div class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-md">
+    <h1 id="title" class="text-2xl font-bold mb-4 text-center"></h1>
+    <p id="desc" class="text-gray-700 mb-6 text-sm text-center"></p>
+
+    <form action="mailto:admin@islamiccalendar.dev" method="POST" enctype="text/plain" class="space-y-4">
+      <div>
+        <label id="label-name" class="block text-gray-600 mb-1"></label>
+        <input type="text" name="name" required class="w-full border border-gray-300 rounded px-3 py-2" />
+      </div>
+      <div>
+        <label id="label-email" class="block text-gray-600 mb-1"></label>
+        <input type="email" name="email" required class="w-full border border-gray-300 rounded px-3 py-2" />
+      </div>
+      <div>
+        <label id="label-msg" class="block text-gray-600 mb-1"></label>
+        <textarea name="message" rows="5" required class="w-full border border-gray-300 rounded px-3 py-2"></textarea>
+      </div>
+      <button type="submit" id="btn-send" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"></button>
+    </form>
+
+    <p id="email-line" class="text-sm text-center text-gray-400 mt-6"></p>
   </div>
+
+  <script>
+    const lang = ['ar', 'en', 'zh'].includes(window.location.hash.replace('#', '')) ? window.location.hash.replace('#', '') : 'ar';
+
+    const t = {
+      ar: {
+        title: "اتصل بنا",
+        desc: "هل لديك اقتراح أو ملاحظة؟ تواصل معنا عبر النموذج أدناه أو البريد الإلكتروني.",
+        name: "الاسم",
+        email: "البريد الإلكتروني",
+        msg: "الرسالة",
+        btn: "إرسال الرسالة",
+        emailLine: 'أو راسلنا مباشرة: <a href="mailto:admin@islamiccalendar.dev" class="text-blue-500 underline">admin@islamiccalendar.dev</a>'
+      },
+      en: {
+        title: "Contact Us",
+        desc: "Have a suggestion or correction? Get in touch using the form or email below.",
+        name: "Name",
+        email: "Email",
+        msg: "Message",
+        btn: "Send Message",
+        emailLine: 'Or email us directly: <a href="mailto:admin@islamiccalendar.dev" class="text-blue-500 underline">admin@islamiccalendar.dev</a>'
+      },
+      zh: {
+        title: "联系我们",
+        desc: "有建议或意见？欢迎通过下方表单或电子邮件联系我们。",
+        name: "姓名",
+        email: "电子邮件",
+        msg: "留言",
+        btn: "发送信息",
+        emailLine: '或者发送邮件至：<a href="mailto:admin@islamiccalendar.dev" class="text-blue-500 underline">admin@islamiccalendar.dev</a>'
+      }
+    };
+
+    const tt = t[lang];
+    document.getElementById('title').textContent = tt.title;
+    document.getElementById('desc').textContent = tt.desc;
+    document.getElementById('label-name').textContent = tt.name;
+    document.getElementById('label-email').textContent = tt.email;
+    document.getElementById('label-msg').textContent = tt.msg;
+    document.getElementById('btn-send').textContent = tt.btn;
+    document.getElementById('email-line').innerHTML = tt.emailLine;
+
+    document.body.setAttribute("dir", lang === 'ar' ? 'rtl' : 'ltr');
+    document.documentElement.setAttribute("lang", lang);
+  </script>
 </body>
 </html>
