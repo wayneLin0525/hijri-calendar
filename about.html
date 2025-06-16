@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="rtl">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <title>عن الموقع | About | 关于我们</title>
@@ -9,29 +9,49 @@
 </head>
 <body class="bg-gray-100 p-6">
   <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md p-6">
-    <h1 class="text-2xl font-bold mb-4 text-center" id="title"></h1>
-    <p id="content" class="text-gray-700 text-base leading-relaxed text-center"></p>
+    <h1 id="title" class="text-2xl font-bold mb-4 text-center"></h1>
+    <div id="content" class="text-gray-700 text-base leading-relaxed space-y-4"></div>
+    <footer class="mt-8 text-center text-sm text-gray-400">
+      <p>&copy; 2025 islamiccalendar.dev | <a href="/contact.html" class="text-blue-500 hover:underline">اتصل بنا / Contact</a></p>
+    </footer>
   </div>
 
   <script>
     const lang = ['ar', 'en', 'zh'].includes(window.location.hash.replace('#', '')) ? window.location.hash.replace('#', '') : 'ar';
+
     const contentMap = {
       ar: {
         title: "عن الموقع",
-        text: "هذا الموقع يهدف إلى تقديم تقويم هجري وميلادي متكامل، يشمل المناسبات الإسلامية المهمة مع واجهة بسيطة وسهلة الاستخدام."
+        html: `
+          <p>التقويم الإسلامي IslamicCalendar.dev هو مشروع غير ربحي مفتوح المصدر، يهدف إلى توفير تقويم هجري وميلادي دقيق وسهل الاستخدام، مع تحديد أهم المناسبات الإسلامية مثل رمضان، عيد الفطر، والحج.</p>
+          <p>يستهدف الموقع المستخدمين من مختلف أنحاء العالم، وخصوصًا المسلمين المهتمين بمتابعة التواريخ الإسلامية وفقًا للتقويم الهجري المعتمد. جميع البيانات تُحسب باستخدام مكتبة <code>moment-hijri.js</code> ويتم التحقق منها دوريًا.</p>
+          <p>لا يعتمد الموقع على محتوى منسوخ أو تجاري، بل يتم تطويره وصيانته من قبل فريق مستقل بغرض الخدمة المجتمعية والتعليمية.</p>
+          <p>يسعدنا تلقي أي اقتراحات لتحسين الموقع. لا تترددوا بالتواصل معنا عبر <a href="/contact.html" class="text-blue-600 underline">صفحة الاتصال</a>.</p>
+        `
       },
       en: {
         title: "About the Site",
-        text: "This website aims to provide a complete Hijri and Gregorian calendar, including major Islamic events, with a simple and user-friendly interface."
+        html: `
+          <p>IslamicCalendar.dev is a non-commercial, open-source project designed to offer a simple and accurate Hijri-Gregorian calendar. It highlights important Islamic events such as Ramadan, Eid al-Fitr, Hajj, and more.</p>
+          <p>The site is intended for global users — especially Muslims who want a reliable Islamic calendar. All data is calculated using the <code>moment-hijri.js</code> library and is reviewed monthly.</p>
+          <p>There is no copied or scraped content. This website is independently developed and maintained for community benefit and educational use.</p>
+          <p>If you have any suggestions or feedback, feel free to <a href="/contact.html" class="text-blue-600 underline">contact us</a>.</p>
+        `
       },
       zh: {
         title: "关于我们",
-        text: "本网站旨在提供完整的伊斯兰历与公历对照，涵盖重要的伊斯兰节日，并提供简洁易用的界面。"
+        html: `
+          <p>IslamicCalendar.dev 是一个非商业、开源的项目，旨在提供一个简洁、准确的伊斯兰历与公历对照日历，包含如斋月、开斋节、朝觐等重要伊斯兰节日。</p>
+          <p>我们服务于全球用户，特别是关注伊斯兰节日的穆斯林群体。所有日期数据均通过 <code>moment-hijri.js</code> 开源库计算，并定期更新。</p>
+          <p>本网站不包含任何抄袭或商业内容，完全由独立开发者维护，旨在为社区和教育服务。</p>
+          <p>欢迎通过<a href="/contact.html" class="text-blue-600 underline">联系我们页面</a>提供宝贵建议。</p>
+        `
       }
     };
+
     const t = contentMap[lang];
     document.getElementById('title').textContent = t.title;
-    document.getElementById('content').textContent = t.text;
+    document.getElementById('content').innerHTML = t.html;
     document.body.setAttribute("dir", lang === 'ar' ? 'rtl' : 'ltr');
     document.documentElement.setAttribute("lang", lang);
   </script>
