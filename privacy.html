@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>سياسة الخصوصية | Privacy Policy | 隐私政策</title>
+  <meta name="description" content="اطلع على سياسة الخصوصية الخاصة بموقع التقويم. Read our privacy policy for the Hijri-Gregorian Calendar site." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-6">
+  <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md p-6">
+    <h1 class="text-2xl font-bold mb-4 text-center" id="title"></h1>
+    <p id="content" class="text-gray-700 text-base leading-relaxed text-center"></p>
+  </div>
+
+  <script>
+    const lang = ['ar', 'en', 'zh'].includes(window.location.hash.replace('#', '')) ? window.location.hash.replace('#', '') : 'ar';
+    const contentMap = {
+      ar: {
+        title: "سياسة الخصوصية",
+        text: "نحن لا نقوم بجمع أي بيانات شخصية من المستخدمين. هذا الموقع لا يستخدم ملفات تعريف الارتباط أو خدمات التتبع."
+      },
+      en: {
+        title: "Privacy Policy",
+        text: "We do not collect any personal data from users. This site does not use cookies or tracking services."
+      },
+      zh: {
+        title: "隐私政策",
+        text: "我们不会收集任何用户的个人数据。本站不使用 Cookie 或跟踪服务。"
+      }
+    };
+    const t = contentMap[lang];
+    document.getElementById('title').textContent = t.title;
+    document.getElementById('content').textContent = t.text;
+    document.body.setAttribute("dir", lang === 'ar' ? 'rtl' : 'ltr');
+    document.documentElement.setAttribute("lang", lang);
+  </script>
+</body>
+</html>
