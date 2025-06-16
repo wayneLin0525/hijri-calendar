@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>عن الموقع | About | 关于我们</title>
+  <meta name="description" content="تعرف على موقع التقويم الهجري والميلادي وأهدافه. Learn more about the Hijri-Gregorian Calendar website." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-6">
+  <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md p-6">
+    <h1 class="text-2xl font-bold mb-4 text-center" id="title"></h1>
+    <p id="content" class="text-gray-700 text-base leading-relaxed text-center"></p>
+  </div>
+
+  <script>
+    const lang = ['ar', 'en', 'zh'].includes(window.location.hash.replace('#', '')) ? window.location.hash.replace('#', '') : 'ar';
+    const contentMap = {
+      ar: {
+        title: "عن الموقع",
+        text: "هذا الموقع يهدف إلى تقديم تقويم هجري وميلادي متكامل، يشمل المناسبات الإسلامية المهمة مع واجهة بسيطة وسهلة الاستخدام."
+      },
+      en: {
+        title: "About the Site",
+        text: "This website aims to provide a complete Hijri and Gregorian calendar, including major Islamic events, with a simple and user-friendly interface."
+      },
+      zh: {
+        title: "关于我们",
+        text: "本网站旨在提供完整的伊斯兰历与公历对照，涵盖重要的伊斯兰节日，并提供简洁易用的界面。"
+      }
+    };
+    const t = contentMap[lang];
+    document.getElementById('title').textContent = t.title;
+    document.getElementById('content').textContent = t.text;
+    document.body.setAttribute("dir", lang === 'ar' ? 'rtl' : 'ltr');
+    document.documentElement.setAttribute("lang", lang);
+  </script>
+</body>
+</html>
